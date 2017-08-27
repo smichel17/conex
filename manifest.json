@@ -10,8 +10,35 @@
     "browser_style": false,
     "default_popup": "browser-action.html",
     "default_icon": {
-      "48": "icons/icon_48.png"
+      "48": "icons/icon_48.png",
+      "19": "icons/icon_19.png",
+      "38": "icons/icon_38.png"
     }
+  },
+  "sidebar_action": {
+    "default_icon": {
+      "48": "icons/icon_48.png",
+      "19": "icons/icon_19.png",
+      "38": "icons/icon_38.png"
+    },
+    "browser_style": false,
+    "default_title": "Taborama",
+    "default_panel": "sidebar-action.html"
+  },
+  "page_action": {
+    "browser_style": true,
+    "default_icon": {
+      "19": "icons/icon_error_19.png",
+      "38": "icons/icon_error_38.png"
+    },
+    "default_title": "re-open to tab in other group (CTRL+Shift+Y)"
+  },
+  "background": {
+    "scripts": [
+      "helper.js",
+      "components.js",
+      "background.js"
+    ]
   },
   "applications": {
     "gecko": {
@@ -34,21 +61,6 @@
   "options_ui": {
     "page": "options_ui.html",
     "browser_style": true
-  },
-  "page_action": {
-    "browser_style": true,
-    "default_icon": {
-      "19": "icons/icon_error_19.png",
-      "38": "icons/icon_error_38.png"
-    },
-    "default_title": "re-open to tab in other group (CTRL+Shift+Y)"
-  },
-  "background": {
-    "scripts": [
-      "helper.js",
-      "components.js",
-      "background.js"
-    ]
   },
   "icons": {
     "48": "icons/icon_48.png"

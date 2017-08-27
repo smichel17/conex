@@ -19,8 +19,15 @@ body, ul {
   width: 200px;
 }
 
-#browseraction span.close-button, #browseraction span.tabs-count {
+#browseraction span.close-button,
+#browseraction span.tabs-count,
+#sidebaraction span.close-button,
+#sidebaraction span.tabs-count {
   float: right;
+}
+
+#browseraction li {
+  width: 500px;
 }
 
 span.close-button {
@@ -60,7 +67,6 @@ form #search {
   font-weight: lighter;
   padding-top: 10px;
   margin:10px 0px 0px 10px;
-  width: 500px;
 }
 
 li {
@@ -69,7 +75,6 @@ li {
   list-style-type: none;
   padding:10px;
   padding-bottom: 10px;
-  width: 500px;
 }
 
 li.section div {
