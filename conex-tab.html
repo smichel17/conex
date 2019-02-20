@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>tab item</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <form class="tab blue" onchange="javascript:this.submit()" action="">
+      <input type="hidden" name="tab_id" value="42"/>
+      <input title="show tab" type="radio" id="tab_1_title" name="action" value="focus_tab"/>
+      <label title="show tab" class="tab-thumbnail" for="tab_1_title">
+        <img class="thumbnail-image" src="./thumbnail.jpg" alt="thumbnail" width="200"/>
+      </label>
+      <label title="show tab" class="tab-favicon" for="tab_1_title">
+        <img class="icon-base" alt="favicon" src="./favicon.ico" />
+      </label>
+      <label title="show tab" class="tab-content" for="tab_1_title">
+          <div class="tab-title" >Einstieg in die Programmiersprache Go</div>
+          <div class="tab-url">heise.de/articles/go</div>
+      </label>
+      <input title="close tab" type="radio" id="tab_1_close_tab" name="action" value="close_tab"/>
+      <label title="close tab" class="tab-close" for="tab_1_close_tab">&#9587;</label>
+      <input type="submit"/>
+    </form>
+  </body>
+</html>
