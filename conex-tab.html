@@ -2,25 +2,93 @@
 <html lang="en">
   <head>
     <title>tab item</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
-  <body>
-    <form class="tab blue" onchange="javascript:this.submit()" action="">
-      <input type="hidden" name="tab_id" value="42"/>
-      <input title="show tab" type="radio" id="tab_1_title" name="action" value="focus_tab"/>
-      <label title="show tab" class="tab-thumbnail" for="tab_1_title">
-        <img class="thumbnail-image" src="./thumbnail.jpg" alt="thumbnail" width="200"/>
+  <script type="module">
+  // alias for document.querySelectorAll
+  const $ = function(s, parent){ return (parent || document).querySelectorAll(s); };
+
+  // alias for document.querySelector
+  const $1 = function(s, parent){ return (parent || document).querySelector(s); };
+
+
+  import {html, render} from 'https://unpkg.com/lit-html?module';
+
+  const tabItem = (data) => html`
+    <form class="tab ${data.color}" action="">
+      <input type="hidden" name="tab-id" value="${data.tabId}"/>
+      <input title="show tab" type="radio" id="tabid-${data.tabId}-title" name="action" value="focus-tab"/>
+      <label title="show tab" class="tab-thumbnail" for="tabid-${data.tabId}-title">
+        <img class="thumbnail-image" src="${data.thumbnail}" alt="thumbnail" width="200"/>
       </label>
-      <label title="show tab" class="tab-favicon" for="tab_1_title">
-        <img class="icon-base" alt="favicon" src="./favicon.ico" />
+      <label title="show tab" class="tab-favicon" for="tabid-${data.tabId}-title">
+        <img class="icon-base" alt="favicon" src="${data.favicon}" />
       </label>
-      <label title="show tab" class="tab-content" for="tab_1_title">
-          <div class="tab-title" >Einstieg in die Programmiersprache Go</div>
-          <div class="tab-url">heise.de/articles/go</div>
+      <label title="show tab" class="tab-content" for="tabid-${data.tabId}-title">
+          <div class="tab-title">${data.title}</div>
+          <div class="tab-url">${data.url}</div>
       </label>
-      <input title="close tab" type="radio" id="tab_1_close_tab" name="action" value="close_tab"/>
-      <label title="close tab" class="tab-close" for="tab_1_close_tab">&#9587;</label>
+      <input title="close tab" type="radio" id="tabid-${data.tabId}-close-tab" name="action" value="close-tab"/>
+      <label title="close tab" class="tab-close" for="tabid-${data.tabId}-close-tab">&#9587;</label>
       <input type="submit"/>
     </form>
+   `;
+
+   class TabItem extends HTMLElement {
+     constructor() {
+       super();
+       console.debug(this);
+       const d = {color: this.getAttribute('color'),
+                 tabId: this.getAttribute('tab-id'),
+                 thumbnail: this.getAttribute('thumbnail'),
+                 favicon: this.getAttribute('favicon'),
+                 title: this.getAttribute('tab-title'),
+                 url: this.getAttribute('url')}
+
+       render(tabItem(d), this);
+       const form = $1('form', this);
+
+       form.addEventListener("change", e => {
+         console.debug('form onchange', $1('input[name=action]:checked').value);
+       });
+       this.addEventListener("focus", e => console.debug('focused'));
+       this.addEventListener('click', e => this.focus());
+       //debugger;
+     }
+
+     connectedCallback() {
+       console.debug('tab-titem connected');
+     }
+
+     disconnectedCallback() {
+       console.debug('tab-item disconnnected');
+     }
+
+     adoptedCallback() {
+       console.debug('tab-item adopted');
+     }
+   }
+
+   document.addEventListener("keyup", e => {
+     console.debug('keyup', e);
+   });
+
+   customElements.define('tab-item', TabItem);
+  </script>
+  <body>
+    <a href="#" onclick="javascript:setTimeout(function() {document.querySelector('tab-item').focus(); console.debug(document.activeElement);}, 1000);">XXXXXXXXXXX</a>
+    <tab-item tabindex='1' color='blue' tab-id='40' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <!--
+    <tab-item tabindex='2' color='blue' tab-id='41' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='3' color='blue' tab-id='42' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='4' color='blue' tab-id='43' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='5' color='blue' tab-id='44' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='6' color='blue' tab-id='45' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='7' color='blue' tab-id='46' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='8' color='blue' tab-id='47' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='9' color='blue' tab-id='48' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='10' color='blue' tab-id='49' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    -->
   </body>
 </html>

@@ -2,14 +2,17 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Helvetica, Arial, Sans-Serif;
+  font-size: smaller;
+  font-weight: lighter;
 }
 
-form.tab {
+tab-item form.tab {
   border-left:2px solid black;
   height: 60px;
   display: grid;
-  grid-template-columns: 120px auto 80px;
-  grid-column-gap: 10px;
+  grid-template-columns: 90px auto 60px;
+  grid-column-gap: 5px;
   grid-template-areas:
     "thumbnail content close";
 }
@@ -18,41 +21,45 @@ form.tab {
   border-left-color: rgb(55, 173, 255) !important;
 }
 
-form label {
+tab-item form label {
   cursor: pointer;
   width: 100%;
   height: 100%;
   padding: 5px;
 }
 
-form:hover {
-  background-color: red;
+tab-item:hover form, tab-item:focus form, tab-item form:hover, tab-item form:focus {
+  background-color: rgb(232, 232, 232);
 }
 
-.tab-content { 
+tab-item .tab-content { 
   grid-area: content;
   flex-direction: column;
   justify-content: center;
 }
 
-.tab-content div { 
+tab-item .tab-url {
+  color: rgb(152, 152, 152);
+}
+
+tab-item .tab-content div { 
   align-self: baseline;
 }
 
-.tab-thumbnail { grid-area: thumbnail; }
-.tab-favicon { grid-area: thumbnail; }
-.tab-close:hover { background-color: green; }
+tab-item .tab-thumbnail { grid-area: thumbnail; }
+tab-item .tab-favicon { grid-area: thumbnail; }
+tab-item .tab-close:hover, .tab-close:focus { background-color: rgb(208, 208, 208); }
 
-.tab-favicon, .tab-content, .tab-close {
+tab-item .tab-favicon, tab-item .tab-content, tab-item .tab-close {
   display: flex;
   align-items: center;
 }
 
-.tab-content, .tab-close {
+tab-item .tab-content, tab-item .tab-close {
   padding: 0 10px;
 }
 
-.tab-close { 
+tab-item .tab-close { 
   grid-area: close;
   width: 30px;
   height: 40px;
@@ -61,14 +68,14 @@ form:hover {
 }
 
 
-.tab-favicon {
+tab-item .tab-favicon {
   margin: 5px;
 }
 
-.thumbnail-image {
+tab-item .thumbnail-image {
   width: auto;
   height: 50px;
 }
 
-.icon-base { height: 20px; }
+tab-item .icon-base { height: 20px; }
 input[type=submit], input[type=radio] { display: none; }
