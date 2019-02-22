@@ -13,9 +13,7 @@
   const $1 = function(s, parent){ return (parent || document).querySelector(s); };
 
 
-  import {html, render} from 'https://unpkg.com/lit-html?module';
-
-  const tabItem = (data) => html`
+  const tabItem = (data) => `
     <form class="tab ${data.color}" action="">
       <input type="hidden" name="tab-id" value="${data.tabId}"/>
       <input title="show tab" type="radio" id="tabid-${data.tabId}-title" name="action" value="focus-tab"/>
@@ -23,7 +21,7 @@
         <img class="thumbnail-image" src="${data.thumbnail}" alt="thumbnail" width="200"/>
       </label>
       <label title="show tab" class="tab-favicon" for="tabid-${data.tabId}-title">
-        <img class="icon-base" alt="favicon" src="${data.favicon}" />
+        <img class="favicon-image" alt="favicon" src="${data.favicon}" />
       </label>
       <label title="show tab" class="tab-content" for="tabid-${data.tabId}-title">
           <div class="tab-title">${data.title}</div>
@@ -46,15 +44,18 @@
                  title: this.getAttribute('tab-title'),
                  url: this.getAttribute('url')}
 
-       render(tabItem(d), this);
+       this.innerHTML = tabItem(d);
        const form = $1('form', this);
 
        form.addEventListener("change", e => {
          console.debug('form onchange', $1('input[name=action]:checked').value);
        });
-       this.addEventListener("focus", e => console.debug('focused'));
+       this.addEventListener("focus", e => console.debug('focused', this));
        this.addEventListener('click', e => this.focus());
-       //debugger;
+
+       this.addEventListener("keyup", e => {
+         console.debug('keyup', e, this);
+       });
      }
 
      connectedCallback() {
@@ -68,27 +69,43 @@
      adoptedCallback() {
        console.debug('tab-item adopted');
      }
-   }
 
-   document.addEventListener("keyup", e => {
-     console.debug('keyup', e);
-   });
+   };
 
    customElements.define('tab-item', TabItem);
   </script>
   <body>
-    <a href="#" onclick="javascript:setTimeout(function() {document.querySelector('tab-item').focus(); console.debug(document.activeElement);}, 1000);">XXXXXXXXXXX</a>
-    <tab-item tabindex='1' color='blue' tab-id='40' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <a href="#" onclick="javascript:setTimeout(function() {document.querySelector('tab-item').focus(); console.debug(document.activeElement);}, 300);">XXXXXXXXXXX</a>
+    <tab-item tabindex='1' color='blue-marker' tab-id='40' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='2' color='blue-marker' tab-id='41' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='3' color='blue-marker' tab-id='42' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='4' color='blue-marker' tab-id='43' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='5' color='blue-marker' tab-id='44' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='6' color='blue-marker' tab-id='45' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='7' color='blue-marker' tab-id='46' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='8' color='blue-marker' tab-id='47' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='9' color='blue-marker' tab-id='48' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <tab-item tabindex='10' color='blue-marker' tab-id='49' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
     <!--
-    <tab-item tabindex='2' color='blue' tab-id='41' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
-    <tab-item tabindex='3' color='blue' tab-id='42' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
-    <tab-item tabindex='4' color='blue' tab-id='43' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
-    <tab-item tabindex='5' color='blue' tab-id='44' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
-    <tab-item tabindex='6' color='blue' tab-id='45' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
-    <tab-item tabindex='7' color='blue' tab-id='46' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
-    <tab-item tabindex='8' color='blue' tab-id='47' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
-    <tab-item tabindex='9' color='blue' tab-id='48' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
-    <tab-item tabindex='10' color='blue' tab-id='49' thumbnail='./thumbnail.jpg' favicon='./favicon.ico' tab-title='this is a wonderful title' url='heise.de/artikel/golang'></tab-item>
+    <container-item>
+      <form class="tab blue-marker" action="">
+        <input type="hidden" name="tab-id" value="40">
+        <input title="show tab" type="radio" id="tabid-40-title" name="action" value="focus-tab">
+        <label title="show tab" class="tab-thumbnail" for="tabid-40-title">
+          <img class="thumbnail-image" src="./thumbnail.jpg" alt="thumbnail" width="200">
+        </label>
+        <label title="show tab" class="tab-favicon" for="tabid-40-title">
+          <img class="favicon-image" alt="favicon" src="./favicon.ico">
+        </label>
+        <label title="show tab" class="tab-content" for="tabid-40-title">
+            <div class="tab-title">this is a wonderful title</div>
+            <div class="tab-url">heise.de/artikel/golang</div>
+        </label>
+        <input title="close tab" type="radio" id="tabid-40-close-tab" name="action" value="close-tab">
+        <label title="close tab" class="tab-close" for="tabid-40-close-tab">╳</label>
+        <input type="submit">
+      </form>
+    </container-item>
     -->
   </body>
 </html>
