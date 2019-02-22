@@ -11,13 +11,14 @@ input[type=submit], input[type=radio] { display: none; }
 /* variables */
 :root {
   --height: 40px;
+  --close-column-width: 60px; /* should be height + 20 */
 }
 
 /* grid setup */
 tab-item form {
   display: grid;
   grid-gap: 5px;
-  grid-template-columns: 90px auto 40px;
+  grid-template-columns: 90px auto var(--close-column-width);
   grid-template-areas: "thumbnail content close";
 
   height: var(--height);
@@ -66,8 +67,11 @@ tab-item .tab-url {
 
 tab-item .tab-close { 
   display: none;
+  width: var(--height);
   font-size: x-large;
   place-content: center;
+  border:1px solid rgb(208, 208, 208); 
+  border-radius:6px;
 }
 
 tab-item:focus form .tab-close, tab-item form:hover .tab-close {
