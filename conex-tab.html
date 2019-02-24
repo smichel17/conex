@@ -60,6 +60,7 @@
    class ContainerItem extends HTMLElement {
      constructor() {
        super();
+       this.ignoredKeyDownKeys = ['Tab'];
        console.debug(this);
        const d = {color: this.getAttribute('color'),
                  containerId: this.getAttribute('container-id'),
@@ -73,15 +74,45 @@
 
        form.addEventListener("change", e => {
          console.debug('form onchange', $1('input[name=action]:checked').value);
-         form.submit();
        });
 
        this.addEventListener("focus", e => console.debug('focused', this));
        this.addEventListener('click', e => this.focus());
 
-       this.addEventListener("keyup", e => {
-         console.debug('keyup', e, this);
+       this.addEventListener("keydown", e => {
+         console.debug('container-item keydown', e.target);
+         if(this.ignoredKeyDownKeys.includes(e.key)) {
+           return;
+         }
+         e.stopPropagation();
+         e.preventDefault();
+         
+         switch (e.key) {
+           case "ArrowUp":   this.focusLastTabOfPreviousContainer(); break;
+           case "ArrowDown": this.focusFirstTab(); break;
+           default:          this.continueSearch(e);
+         }
        });
+     }
+
+     focusFirstTab() {
+       try {
+         $1('tab-item', this).focus();
+       } catch(e) {
+         console.warn('could not find tab item in container', this, ': ', e);
+       }
+     }
+
+     focusLastTabOfPreviousContainer() {
+       try {
+         Array.from($('tab-item', this.previousElementSibling)).pop().focus();
+       } catch(e) {
+         console.warn('error focusing the last tab item of the previous container: ', e);
+       }
+     }
+
+     continueSearch(e) {
+       console.debug('continue search placeholder for:', e);
      }
 
      connectedCallback() {
@@ -101,7 +132,7 @@
    class TabItem extends HTMLElement {
      constructor() {
        super();
-       console.debug(this);
+       this.ignoredKeyDownKeys = ['Tab'];
        const d = {color: this.getAttribute('color'),
                  tabId: this.getAttribute('tab-id'),
                  thumbnail: this.getAttribute('thumbnail'),
@@ -110,50 +141,67 @@
                  url: this.getAttribute('url')}
 
        this.innerHTML = tabItem(d);
-       const form = $1('form', this);
+       this.form = $1('form', this);
 
-       form.addEventListener("change", e => {
+       this.form.addEventListener("change", e => {
          console.debug('form onchange', $1('input[name=action]:checked').value);
-         form.submit();
        });
 
-       this.addEventListener("focus", e => {
-         console.debug('focused', this)
-       });
-
-       this.addEventListener('click', e => this.focus());
-
-       this.addEventListener("keyup", e => {
-         if (e.key == "ArrowUp") {
-           let elem = this;
-           do {
-             elem = elem.previousElementSibling;
-             console.log('aaa', elem);
-             if(elem == null) { 
-               console.log('ggg', this.parentElement);
-               this.parentElement.focus();
-               return;
-             }
-           } while(elem.style.display == "none");
-
-           elem.focus();
+       this.addEventListener("keydown", e => {
+         console.debug('tab-item keydown', e);
+         if(this.ignoredKeyDownKeys.includes(e.key)) {
+           return;
          }
-
-         if(e.key == "ArrowDown") {
-           let elem = this;
-           do {
-             elem = elem.nextElementSibling;
-             if(elem == null) { 
-               if(this.parentElement.nextElementSibling) {
-                 elem.parentElement.nextElementSibling.focus();
-               }
-               return;
-             }
-           } while(elem.style.display == "none");
-
-           elem.focus();
+         e.stopPropagation();
+         e.preventDefault();
+         
+         switch (e.key) {
+           case "ArrowUp":   this.focusPreviousTabOrContainer(); break;
+           case "ArrowDown": this.focusNextTabOrContainer(); break;
+           case "Enter":     this.showTab(d.tabId); break;
+           case "Backspace": this.closeTab(d.tabId); break;
+           default:          this.continueSearch(e);
          }
        });
+     }
+
+     continueSearch(e) {
+       console.debug('continue search placeholder for:', e);
+     }
+
+     showTab(tabId) {
+       $1('input[value=focus-tab]', this).checked = true;
+       $1('form', this).dispatchEvent((new Event('change')));
+     }
+
+     closeTab(tabId) {
+       $1('input[value=close-tab]', this).checked = true;
+     }
+
+     focusNextTabOrContainer() {
+       let elem = this;
+       do {
+         elem = elem.nextElementSibling;
+         if (elem == null) {
+           this.parentElement.nextElementSibling && this.parentElement.nextElementSibling.focus();
+           return;
+         }
+       } while (elem.style.display == "none");
+
+       elem.focus();
+     }
+
+     focusPreviousTabOrContainer() {
+       let elem = this;
+       do {
+         elem = elem.previousElementSibling;
+         if (elem.nodeName != 'TAB-ITEM') {
+           this.parentElement.focus();
+           return;
+         }
+       } while (elem.style.display == "none");
+
+       elem.focus();
      }
 
      connectedCallback() {

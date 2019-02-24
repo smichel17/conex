@@ -43,10 +43,10 @@ form.tab-item {
   padding: 5px 20px 5px 5px;
 }
 
-form.tab-item .tab-thumbnail { grid-area: thumbnail; }
-form.tab-item .tab-favicon { grid-area: thumbnail; }
-form.tab-item .tab-content { grid-area: content; }
-form.tab-item .tab-close { grid-area: close; }
+.tab-thumbnail { grid-area: thumbnail; }
+.tab-favicon { grid-area: thumbnail; }
+.tab-content { grid-area: content; }
+.tab-close { grid-area: close; }
 
 /* focus / hover styles */
 
@@ -54,28 +54,28 @@ tab-item:focus form.tab-item, form.tab-item:hover {
   background-color: rgb(232, 232, 232);
 }
 
-tab-item:focus form.tab-item img, tab-item form.tab-item:hover img {
+tab-item:focus img, form.tab-item:hover img {
   opacity: 0.5;
 }
 
 /* label contents */
 
-form.tab-item .thumbnail-image {
+.thumbnail-image {
   height: var(--height);
   width: auto;
 }
 
-form.tab-item .favicon-image {
+.favicon-image {
   height: 15px;
   width: auto;
   align-self: end;
 }
 
-form.tab-item .tab-url {
+.tab-url {
   color: rgb(152, 152, 152);
 }
 
-form.tab-item .tab-close {
+.tab-close {
   display: none;
   width: 1em;
   height: 1em;
@@ -86,15 +86,15 @@ form.tab-item .tab-close {
   border-radius: 6px;
 }
 
-form.tab-item .tab-close {
+.tab-close {
   display: none;
 }
 
-tab-item form.tab-item:hover .tab-close {
+form.tab-item:hover .tab-close {
   display: inherit;
 }
 
-form.tab-item .tab-close:hover, form.tab-item .tab-close:focus {
+.tab-close:hover, .tab-close:focus {
   background-color: rgb(208, 208, 208);
 }
 
@@ -117,22 +117,24 @@ form.container-item {
   padding: 5px 20px 5px 5px;
 }
 
-form.container-item .container-expander, form.container-item .container-collapser  {
+.container-expander, .container-collapser  {
   grid-area: expand;
 }
 
-form.container-item .container-focus { grid-area: focus; }
+.container-focus {
+  grid-area: focus;
+}
 
-form.container-item .container-tab-count {
+.container-tab-count {
   grid-column-start: new-tab;
   grid-column-end: close-container;
 }
 
-form.container-item .container-new-tab {
+.container-new-tab {
   grid-area: new-tab;
 }
 
-form.container-item .container-close-container {
+.container-close-container {
   grid-area: close-container;
 }
 
@@ -142,44 +144,44 @@ container-item:focus form.container-item, form.container-item:hover {
   background-color: rgb(232, 232, 232);
 }
 
-form.container-item .container-expander, form.container-item .container-collapser {
+.container-expander, .container-collapser {
   place-content: center;
 }
 
-form.container-item .container-expander:hover, form.container-item .container-collapser:hover {
+.container-expander:hover, .container-collapser:hover {
   background-color: rgb(208, 208, 208);
 }
 
 form.container-item:hover .container-expander, form.container-item:hover .container-collapser,
-container-item:focus form.container-item .container-expander, container-item:focus form.container-item .container-collapser {
+container-item:focus .container-expander, container-item:focus .container-collapser {
   border: 1px solid rgb(208, 208, 208);
   border-radius: 6px;
 }
 
-form.container-item .container-tab-count {
+.container-tab-count {
   display: inherit;
 }
 
-container-item:focus form.container-item .container-tab-count, form.container-item:hover .container-tab-count {
+container-item:focus .container-tab-count, form.container-item:hover .container-tab-count {
   display: none;
 }
 
-form.container-item .container-new-tab, form.container-item .container-close-container {
+.container-new-tab, .container-close-container {
   display: none;
 }
 
-container-item:focus form.container-item .container-new-tab,
-container-item form.container-item:hover .container-new-tab,
-container-item:focus form.container-item .container-close-container,
-container-item form.container-item:hover .container-close-container {
+container-item:focus      .container-new-tab,
+form.container-item:hover .container-new-tab,
+container-item:focus      .container-close-container,
+form.container-item:hover .container-close-container {
   display: inherit;
 }
 
-form.container-item .container-collapser {
+.container-collapser {
   display: none;
 }
 
-form.container-item .container-close-container, form.container-item .container-new-tab {
+.container-close-container, .container-new-tab {
   font-size: x-large;
   width: 1em;
   height: 1em;
@@ -190,10 +192,10 @@ form.container-item .container-close-container, form.container-item .container-n
   border-radius: 6px;
 }
 
-form.container-item .container-close-container:hover, form.container-item .container-new-tab:hover {
+.container-close-container:hover, .container-new-tab:hover {
   background-color: rgb(208, 208, 208);
 }
 
-form.container-item .container-new-tab {
+.container-new-tab {
   font-weight: lighter;
 }
