@@ -1,4 +1,5 @@
 /* general setup */
+
 body {
   margin: 0;
   padding: 0;
@@ -6,83 +7,193 @@ body {
   font-size: smaller;
   font-weight: lighter;
 }
-input[type=submit], input[type=radio] { display: none; }
+
+input[type=submit], input[type=radio] {
+  display: none;
+}
 
 /* variables */
+
 :root {
   --height: 40px;
-  --close-column-width: 60px; /* should be height + 20 */
-}
-
-/* grid setup */
-tab-item form {
-  display: grid;
-  grid-gap: 5px;
-  grid-template-columns: 90px auto var(--close-column-width);
-  grid-template-areas: "thumbnail content close";
-
-  height: var(--height);
-  border-left:2px solid;
-  align-items: center;
-  padding: 5px;
-}
-
-tab-item .tab-thumbnail { grid-area: thumbnail; }
-tab-item .tab-favicon   { grid-area: thumbnail; }
-tab-item .tab-content   { grid-area: content; }
-tab-item .tab-close     { grid-area: close; }
-
-/* focus / hover styles */
-tab-item:focus form, tab-item form:hover {
-  background-color: rgb(232, 232, 232);
-}
-
-tab-item:focus form img, tab-item form:hover img {
-  opacity: 0.5;
+  --action-width: 30px;
 }
 
 /* label (grid cells) styling */
-tab-item form label {
+
+form label {
   height: 100%;
   display: grid;
   align-items: center;
   cursor: pointer;
 }
 
+/***************** tab item ******************/
+
+/* grid setup */
+
+form.tab-item {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: 90px auto var(--action-width);
+  grid-template-areas: "thumbnail content close";
+  height: var(--height);
+  border-left: 2px solid;
+  align-items: center;
+  padding: 5px 20px 5px 5px;
+}
+
+form.tab-item .tab-thumbnail { grid-area: thumbnail; }
+form.tab-item .tab-favicon { grid-area: thumbnail; }
+form.tab-item .tab-content { grid-area: content; }
+form.tab-item .tab-close { grid-area: close; }
+
+/* focus / hover styles */
+
+tab-item:focus form.tab-item, form.tab-item:hover {
+  background-color: rgb(232, 232, 232);
+}
+
+tab-item:focus form.tab-item img, tab-item form.tab-item:hover img {
+  opacity: 0.5;
+}
+
 /* label contents */
-tab-item .thumbnail-image {
+
+form.tab-item .thumbnail-image {
   height: var(--height);
   width: auto;
 }
 
-tab-item .favicon-image { 
+form.tab-item .favicon-image {
   height: 15px;
   width: auto;
   align-self: end;
 }
 
-tab-item .tab-url {
+form.tab-item .tab-url {
   color: rgb(152, 152, 152);
 }
 
-tab-item .tab-close { 
+form.tab-item .tab-close {
   display: none;
-  width: var(--height);
+  width: 1em;
+  height: 1em;
   font-size: x-large;
   place-content: center;
-  border:1px solid rgb(208, 208, 208); 
-  border-radius:6px;
+  place-self: center;
+  border: 1px solid rgb(208, 208, 208);
+  border-radius: 6px;
 }
 
-tab-item:focus form .tab-close, tab-item form:hover .tab-close {
+form.tab-item .tab-close {
+  display: none;
+}
+
+tab-item form.tab-item:hover .tab-close {
   display: inherit;
 }
 
-tab-item .tab-close:hover, tab-item .tab-close:focus { 
-  background-color: rgb(208, 208, 208); 
+form.tab-item .tab-close:hover, form.tab-item .tab-close:focus {
+  background-color: rgb(208, 208, 208);
 }
 
 /* colors */
+
 .blue-marker {
   border-left-color: rgb(55, 173, 255) !important;
+}
+
+/***************** container item ******************/
+
+form.container-item {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: var(--action-width) auto var(--action-width) var(--action-width);
+  grid-template-areas: "expand focus new-tab close-container";
+  height: var(--height);
+  border-left: 5px solid;
+  align-items: center;
+  padding: 5px 20px 5px 5px;
+}
+
+form.container-item .container-expander, form.container-item .container-collapser  {
+  grid-area: expand;
+}
+
+form.container-item .container-focus { grid-area: focus; }
+
+form.container-item .container-tab-count {
+  grid-column-start: new-tab;
+  grid-column-end: close-container;
+}
+
+form.container-item .container-new-tab {
+  grid-area: new-tab;
+}
+
+form.container-item .container-close-container {
+  grid-area: close-container;
+}
+
+/* focus / hover styles */
+
+container-item:focus form.container-item, form.container-item:hover {
+  background-color: rgb(232, 232, 232);
+}
+
+form.container-item .container-expander, form.container-item .container-collapser {
+  place-content: center;
+}
+
+form.container-item .container-expander:hover, form.container-item .container-collapser:hover {
+  background-color: rgb(208, 208, 208);
+}
+
+form.container-item:hover .container-expander, form.container-item:hover .container-collapser,
+container-item:focus form.container-item .container-expander, container-item:focus form.container-item .container-collapser {
+  border: 1px solid rgb(208, 208, 208);
+  border-radius: 6px;
+}
+
+form.container-item .container-tab-count {
+  display: inherit;
+}
+
+container-item:focus form.container-item .container-tab-count, form.container-item:hover .container-tab-count {
+  display: none;
+}
+
+form.container-item .container-new-tab, form.container-item .container-close-container {
+  display: none;
+}
+
+container-item:focus form.container-item .container-new-tab,
+container-item form.container-item:hover .container-new-tab,
+container-item:focus form.container-item .container-close-container,
+container-item form.container-item:hover .container-close-container {
+  display: inherit;
+}
+
+form.container-item .container-collapser {
+  display: none;
+}
+
+form.container-item .container-close-container, form.container-item .container-new-tab {
+  font-size: x-large;
+  width: 1em;
+  height: 1em;
+  font-size: x-large;
+  place-content: center;
+  place-self: center;
+  border: 1px solid rgb(208, 208, 208);
+  border-radius: 6px;
+}
+
+form.container-item .container-close-container:hover, form.container-item .container-new-tab:hover {
+  background-color: rgb(208, 208, 208);
+}
+
+form.container-item .container-new-tab {
+  font-weight: lighter;
 }
